@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Chef</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <link rel="stylesheet" href="jquery.mobile-1.4.5.css" />
+    <script type="text/javascript" src="demos/js/jquery.js"></script>
+    <script type="text/javascript" src="jquery.mobile-1.4.5.js"></script>
+    <script type="text/javascript" src="jquery.bpopup.min.js"></script>
+    <style type="text/css" rel="stylesheet">
+        div {
+            margin-top: 25%;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 5%;
+        }
+        img {
+            width:30%;
+            margin:auto;
+        }
+        button img {
+            width: 20px;
+            vertical-align: middle;
+            margin-right:10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <img src="img/logo.png">
+    </div>
+
+    <button id="signIn"><img src="img/Google_logo.png"><span>Sign in with Google</span></button>
+</body>
+</html>
+
+<script type="text/javascript">
+    $('#signIn').click( function() {
+        MainActivity.signIn();
+        MainActivity.loadIndex();
+    });
+
+    //디바이스가 준비되면 처음에 바로 실행되야 할 기능들 실행
+    window.addEventListener('load', function() {
+        if(window.Cordova) {
+            document.addEventListener('deviceready', onDeviceReady, false);
+        } else {
+            onDeviceReady();
+        }
+    }, false);
+
+    //deviceready 상태가 되면 초기설정을 시작한다.
+    function onDeviceReady() {
+        document.addEventListener("backbutton", onBackKeyDown, true); //뒤로가기 버튼 설정
+    }
+
+    //스마트폰의 뒤로가기 버튼을 누르면 종료 메세지를 띄운다.
+    function onBackKeyDown() {
+        navigator.notification.confirm('앱을 종료하시겠습니까?', onBackKeyDownMsg, 'MyChef', '취소, 종료');
+    }
+
+    //종료 버튼을 누르면 앱 종료
+    function onBackKeyDownMsg(button) {
+        if(button == 2) {
+            navigator.app.exitApp();
+        }
+    }
+</script>
